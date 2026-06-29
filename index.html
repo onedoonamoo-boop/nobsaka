@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🇯🇵 오사카 여행 · 26.07.02–05</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── Design Tokens ─── */
+    :root {
+      --navy:        #1B3553;
+      --navy-dark:   #0F2236;
+      --red:         #C94B31;
+      --red-bg:      #FBF1EE;
+      --cream:       #F7F4ED;
+      --white:       #FDFCF9;
+      --warm-gray:   #ECE8DF;
+      --border:      #DDD8CF;
+      --text-dark:   #1E1814;
+      --text-mid:    #5A5044;
+      --text-light:  #9A9082;
+      --green:       #3A7A5A;
+      --green-bg:    #EEF5F0;
+      --purple:      #6848A2;
+      --purple-bg:   #F3EFF8;
+      --gold:        #A07820;
+      --gold-bg:     #FDF6E3;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--navy-dark);
+      padding: 48px 24px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Seigaiha 青海波 pattern — CSS-only */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.12;
+      background-image:
+        radial-gradient(circle 28px at 50% 0%,   transparent 26px, rgba(255,255,255,.9) 26px, rgba(255,255,255,.9) 28px, transparent 28px),
+        radial-gradient(circle 28px at 100% 0%,  transparent 26px, rgba(255,255,255,.9) 26px, rgba(255,255,255,.9) 28px, transparent 28px),
+        radial-gradient(circle 28px at 0%   0%,  transparent 26px, rgba(255,255,255,.9) 26px, rgba(255,255,255,.9) 28px, transparent 28px),
+        radial-gradient(circle 28px at 50% 50%, transparent 26px, rgba(255,255,255,.9) 26px, rgba(255,255,255,.9) 28px, transparent 28px),
+        radial-gradient(circle 28px at 0%  50%, transparent 26px, rgba(255,255,255,.9) 26px, rgba(255,255,255,.9) 28px, transparent 28px),
+        radial-gradient(circle 28px at 100% 50%, transparent 26px, rgba(255,255,255,.9) 26px, rgba(255,255,255,.9) 28px, transparent 28px);
+      background-size: 56px 56px;
+    }
+
+    .hero-flag  { font-size: 54px; display: block; margin-bottom: 10px; position: relative; }
+
+    .hero-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.3px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+
+    .hero-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,.55);
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 300;
+      position: relative;
+    }
+
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 18px;
+      position: relative;
+    }
+
+    .chip {
+      background: rgba(255,255,255,.11);
+      border: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.88);
+      font-size: 12px;
+      padding: 5px 13px;
+      border-radius: 20px;
+    }
+
+    /* ─── TAB BAR ─── */
+    .tab-bar {
+      display: flex;
+      background: var(--white);
+      border-bottom: 2px solid var(--warm-gray);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,.07);
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 68px;
+      padding: 10px 4px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-family: 'Noto Sans KR', sans-serif;
+      color: var(--text-light);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color .2s, border-color .2s;
+      white-space: nowrap;
+      line-height: 1.4;
+    }
+    .tab-day  { font-size: 12px; font-weight: 600; display: block; }
+    .tab-date { font-size: 10px; display: block; }
+
+    .tab-btn.active { color: var(--red); border-bottom-color: var(--red); }
+    .tab-btn:hover:not(.active) { color: var(--text-dark); }
+
+    /* ─── CONTENT ─── */
+    .content {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 16px 96px;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Day header */
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .day-badge {
+      background: var(--red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+    }
+    .day-title-text {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .day-date-text {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-left: auto;
+    }
+
+    /* Hotel card */
+    .hotel-card {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+      color: #fff;
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+    }
+    .hotel-label { font-size: 10px; opacity: .5; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 4px; }
+    .hotel-name  { font-size: 16px; font-weight: 500; margin-bottom: 3px; }
+    .hotel-sub   { font-size: 12px; opacity: .65; }
+
+    /* Note box */
+    .note-box {
+      background: var(--gold-bg);
+      border-left: 3px solid #D4A830;
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      font-size: 12px;
+      color: var(--gold);
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    /* ─── TIMELINE ─── */
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 14px; bottom: 10px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--red) 0%, var(--border) 20%, var(--border) 80%, transparent 100%);
+    }
+
+    /* Event card */
+    .event {
+      position: relative;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 15px;
+      margin-bottom: 10px;
+    }
+    .event::before {
+      content: '';
+      position: absolute;
+      left: -25px; top: 15px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--border);
+    }
+    .event.ev-flight::before  { background: var(--navy);  border-color: var(--navy); }
+    .event.ev-food::before    { background: var(--red);   border-color: var(--red);  }
+    .event.ev-hotel::before   { background: var(--green); border-color: var(--green);}
+    .event.ev-sights::before  { background: var(--purple);border-color: var(--purple);}
+    .event.ev-highlight { border-color: var(--red); }
+
+    .ev-tag {
+      display: inline-block;
+      font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 10px;
+      margin-bottom: 6px; letter-spacing: .3px;
+    }
+    .t-flight  { background: #E5EEF7; color: var(--navy);   }
+    .t-food    { background: var(--red-bg);  color: var(--red);    }
+    .t-hotel   { background: var(--green-bg);color: var(--green);  }
+    .t-sights  { background: var(--purple-bg);color: var(--purple);}
+
+    .ev-time   { font-size: 11px; color: var(--text-light); font-weight: 600; letter-spacing: .3px; margin-bottom: 2px; }
+    .ev-name   { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+    .ev-detail { font-size: 12px; color: var(--text-mid); line-height: 1.65; }
+
+    /* Empty placeholder */
+    .ev-empty {
+      position: relative;
+      border: 1.5px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-light);
+      font-size: 13px;
+    }
+    .ev-empty::before {
+      content: '';
+      position: absolute;
+      left: -25px; top: 13px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--cream);
+      border: 1.5px dashed var(--border);
+    }
+    .ev-empty .plus { font-size: 17px; color: var(--border); line-height: 1; }
+
+    /* ─── PACKING LIST ─── */
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 24px;
+    }
+    .progress-icon { font-size: 22px; }
+    .progress-bar-bg {
+      flex: 1;
+      background: var(--warm-gray);
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), #E8703A);
+      border-radius: 3px;
+      width: 0%;
+      transition: width .35s ease;
+    }
+    .progress-txt { font-size: 12px; color: var(--text-mid); white-space: nowrap; }
+
+    .pack-section { margin-bottom: 26px; }
+    .pack-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-light);
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      padding-bottom: 9px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pack-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+
+    .pack-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 11px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .pack-item:hover { background: var(--warm-gray); }
+
+    .pack-item input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 17px; height: 17px;
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all .15s;
+      position: relative;
+    }
+    .pack-item input[type="checkbox"]:checked {
+      background: var(--red);
+      border-color: var(--red);
+    }
+    .pack-item input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 3px; top: 1px;
+      width: 9px; height: 6px;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(-45deg);
+    }
+
+    .pack-item span {
+      font-size: 13px;
+      color: var(--text-dark);
+      line-height: 1.35;
+    }
+    .pack-item input:checked ~ span {
+      color: var(--text-light);
+      text-decoration: line-through;
+    }
+
+    .sep { height: 1px; background: var(--border); margin: 20px 0; }
+
+    /* ─── Mobile ─── */
+    @media (max-width: 480px) {
+      .pack-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 22px; }
+      .day-date-text { margin-left: 0; width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <span class="hero-flag">🇯🇵</span>
+  <h1 class="hero-title">노브레인 오우사카</h1>
+  <p class="hero-sub">3박 4일 · Osaka · Dotonbori</p>
+  <div class="hero-chips">
+    <span class="chip">📅 26.07.02 — 07.05</span>
+    <span class="chip">✈️ 제주항공 7C</span>
+    <span class="chip">👥 2명</span>
+    <span class="chip">🏨 웰리나 도톤보리</span>
+  </div>
+</header>
+
+<!-- ═══ TAB BAR ═══ -->
+<nav class="tab-bar">
+  <button class="tab-btn active" data-tab="day1">
+    <span class="tab-day">Day 1</span>
+    <span class="tab-date">7/2 목</span>
+  </button>
+  <button class="tab-btn" data-tab="day2">
+    <span class="tab-day">Day 2</span>
+    <span class="tab-date">7/3 금</span>
+  </button>
+  <button class="tab-btn" data-tab="day3">
+    <span class="tab-day">Day 3</span>
+    <span class="tab-date">7/4 토</span>
+  </button>
+  <button class="tab-btn" data-tab="day4">
+    <span class="tab-day">Day 4</span>
+    <span class="tab-date">7/5 일</span>
+  </button>
+  <button class="tab-btn" data-tab="pack">
+    <span class="tab-day">🎒</span>
+    <span class="tab-date">준비물</span>
+  </button>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<main class="content">
+
+  <!-- ───────── DAY 1 ───────── -->
+  <div id="day1" class="tab-panel active">
+    <div class="day-header">
+      <span class="day-badge">DAY 1</span>
+      <span class="day-title-text">오사카 도착의 날</span>
+      <span class="day-date-text">2026.07.02 목</span>
+    </div>
+
+    <div class="hotel-card">
+      <div class="hotel-label">🏨 숙소 (3박)</div>
+      <div class="hotel-name">웰리나 호텔 도톤보리</div>
+      <div class="hotel-sub">체크인 15:00 · 체크아웃 11:00</div>
+    </div>
+
+    <div class="note-box">
+      💡 7시 10분 비행이니 <strong>05:00 전 공항 도착</strong> 목표! 간사이 도착 후 도심 이동은 <strong>라피트 특급/급행열차</strong> (난바역 직행, 약 38분) 또는 리무진 버스 추천.
+    </div>
+
+    <div class="timeline">
+
+      <div class="event ev-flight">
+        <span class="ev-tag t-flight">✈️ 출국</span>
+        <div class="ev-time">07:10</div>
+        <div class="ev-name">인천 → 오사카 (간사이) 출발</div>
+        <div class="ev-detail">제주항공 7C1301 · 인천국제공항 T1<br>출발 1시간 30분 전 탑승 수속 완료 권장</div>
+      </div>
+
+      <div class="event ev-flight">
+        <span class="ev-tag t-flight">🛬 도착</span>
+        <div class="ev-time">도착 예정 (비행 약 2h)</div>
+        <div class="ev-name">간사이 국제공항 도착</div>
+        <div class="ev-detail">입국 심사 → 짐 수령 → 환전 or 교통카드(ICOCA) 충전</div>
+      </div>
+
+      <div class="ev-empty">
+        <span class="plus">＋</span> 공항 → 도심 이동 방법 추가
+      </div>
+
+      <div class="ev-empty">
+        <span class="plus">＋</span> 점심 추가
+      </div>
+
+      <div class="event ev-hotel">
+        <span class="ev-tag t-hotel">🏨 체크인</span>
+        <div class="ev-time">15:00~</div>
+        <div class="ev-name">웰리나 호텔 도톤보리 체크인</div>
+        <div class="ev-detail">짐이 무거우면 호텔에 먼저 맡기고 오전 관광 가능 (프런트에 요청)</div>
+      </div>
+
+      <div class="ev-empty">
+        <span class="plus">＋</span> 체크인 후 오후 일정 추가
+      </div>
+
+      <div class="event ev-food ev-highlight">
+        <span class="ev-tag t-food">🍳 저녁</span>
+        <div class="ev-time">17:00</div>
+        <div class="ev-name">오꼬노미야끼 모미지</div>
+        <div class="ev-detail">예약 · 도톤보리 인근</div>
+      </div>
+
+      <div class="ev-empty">
+        <span class="plus">＋</span> 야간 일정 추가 (ex. 도톤보리 야경, 글리코상)
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───────── DAY 2 ───────── -->
+  <div id="day2" class="tab-panel">
+    <div class="day-header">
+      <span class="day-badge">DAY 2</span>
+      <span class="day-title-text">자유 일정</span>
+      <span class="day-date-text">2026.07.03 금</span>
+    </div>
+
+    <div class="timeline">
+      <div class="ev-empty">
+        <span class="plus">＋</span> 오전 일정 추가 (ex. 조식, 관광지)
+      </div>
+      <div class="ev-empty">
+        <span class="plus">＋</span> 점심 추가
+      </div>
+      <div class="ev-empty">
+        <span class="plus">＋</span> 오후 일정 추가
+      </div>
+      <div class="ev-empty">
+        <span class="plus">＋</span> 저녁 추가
+      </div>
+      <div class="ev-empty">
+        <span class="plus">＋</span> 야간 일정 추가
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── DAY 3 ───────── -->
+  <div id="day3" class="tab-panel">
+    <div class="day-header">
+      <span class="day-badge">DAY 3</span>
+      <span class="day-title-text">자유 일정</span>
+      <span class="day-date-text">2026.07.04 토</span>
+    </div>
+
+    <div class="timeline">
+      <div class="ev-empty">
+        <span class="plus">＋</span> 오전 일정 추가
+      </div>
+      <div class="ev-empty">
+        <span class="plus">＋</span> 점심 추가
+      </div>
+      <div class="ev-empty">
+        <span class="plus">＋</span> 오후 일정 추가
+      </div>
+      <div class="ev-empty">
+        <span class="plus">＋</span> 저녁 추가
+      </div>
+      <div class="ev-empty">
+        <span class="plus">＋</span> 야간 / 기념품 쇼핑 추가
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── DAY 4 ───────── -->
+  <div id="day4" class="tab-panel">
+    <div class="day-header">
+      <span class="day-badge">DAY 4</span>
+      <span class="day-title-text">귀국의 날</span>
+      <span class="day-date-text">2026.07.05 일</span>
+    </div>
+
+    <div class="note-box">
+      💡 16:00 비행이니 <strong>공항 14:00 도착 목표!</strong> 체크아웃 후 오전 여유 있어요. 짐은 체크아웃 전 전날 밤 미리 정리해두면 편해요.
+    </div>
+
+    <div class="timeline">
+
+      <div class="event ev-hotel">
+        <span class="ev-tag t-hotel">🏨 체크아웃</span>
+        <div class="ev-time">~11:00</div>
+        <div class="ev-name">웰리나 호텔 도톤보리 체크아웃</div>
+        <div class="ev-detail">짐은 체크아웃 후 프런트에 잠시 맡길 수 있음</div>
+      </div>
+
+      <div class="ev-empty">
+        <span class="plus">＋</span> 마지막 오전 일정 추가 (ex. 마지막 쇼핑, 카페)
+      </div>
+
+      <div class="ev-empty">
+        <span class="plus">＋</span> 점심 추가
+      </div>
+
+      <div class="event">
+        <span class="ev-tag t-flight">🚆 이동</span>
+        <div class="ev-time">13:30~14:00 출발 권장</div>
+        <div class="ev-name">간사이 국제공항으로 이동</div>
+        <div class="ev-detail">라피트 특급 or 리무진 버스 · 난바역 → 공항 약 40~60분 소요</div>
+      </div>
+
+      <div class="event ev-flight">
+        <span class="ev-tag t-flight">✈️ 귀국</span>
+        <div class="ev-time">16:00</div>
+        <div class="ev-name">오사카 → 인천 출발</div>
+        <div class="ev-detail">제주항공 7C1622 · 간사이 국제공항<br>출국 심사 여유 있게 1.5~2시간 전 공항 도착 권장</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───────── 준비물 ───────── -->
+  <div id="pack" class="tab-panel">
+    <div class="day-header">
+      <span class="day-badge">PACK</span>
+      <span class="day-title-text">여행 준비물 체크리스트</span>
+    </div>
+
+    <div class="progress-wrap">
+      <span class="progress-icon">🎒</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <span class="progress-txt" id="progressTxt">0 / 0 완료</span>
+    </div>
+
+    <!-- 필수 서류 -->
+    <div class="pack-section">
+      <div class="pack-title">📋 필수 서류 · 결제</div>
+      <div class="pack-grid">
+        <label class="pack-item"><input type="checkbox" class="cb"><span>여권 (유효기간 6개월+)</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>항공권 e-티켓</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>호텔 예약 확인서</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>여행자 보험 증서</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>신용카드 / 체크카드</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>엔화 현금</span></label>
+      </div>
+    </div>
+
+    <!-- 의류 -->
+    <div class="pack-section">
+      <div class="pack-title">👕 의류 · 신발</div>
+      <div class="pack-grid">
+        <label class="pack-item"><input type="checkbox" class="cb"><span>상의</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>하의</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>속옷 / 양말</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>편한 운동화 (도보 多)</span></label>
+
+        <label class="pack-item"><input type="checkbox" class="cb"><span>잠옷</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>선글라스</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>모자</span></label>
+      </div>
+    </div>
+
+    <!-- 세면·위생 -->
+    <div class="pack-section">
+      <div class="pack-title">🧴 세면 · 위생</div>
+      <div class="pack-grid">
+        <label class="pack-item"><input type="checkbox" class="cb"><span>세안 도구</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>스킨케어 (기초)</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>선크림 (SPF50+ 추천)</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>칫솔 / 치약</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>면도기</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>소형 접이식 우산</span></label>
+        
+      </div>
+    </div>
+
+    <!-- 전자기기 -->
+    <div class="pack-section">
+      <div class="pack-title">🔋 전자기기</div>
+      <div class="pack-grid">
+        <label class="pack-item"><input type="checkbox" class="cb"><span>카메라선택</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>충전기 / 케이블</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>보조 배터리</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>멀티어댑터</span></label>
+      </div>
+    </div>
+
+
+    <!-- 기타 -->
+    <div class="pack-section">
+      <div class="pack-title">🛍️ 기타</div>
+      <div class="pack-grid">
+        <label class="pack-item"><input type="checkbox" class="cb"><span>비닐봉다리</span></label>
+        <label class="pack-item"><input type="checkbox" class="cb"><span>지퍼백 (소분 정리)</span></label>
+      </div>
+    </div>
+
+  </div><!-- /pack -->
+
+</main>
+
+<!-- ─── How to add a new event (HTML comment guide) ──────────────
+  이벤트 카드 추가 방법:
+  <div class="event ev-food">          ← 종류: ev-flight / ev-food / ev-hotel / ev-sights
+    <span class="ev-tag t-food">🍜 점심</span>   ← 종류: t-flight / t-food / t-hotel / t-sights
+    <div class="ev-time">12:30</div>
+    <div class="ev-name">식당 이름</div>
+    <div class="ev-detail">메모나 주소</div>
+  </div>
+─────────────────────────────────────────────────────────────── -->
+
+<script>
+  /* ── Tab switching ─────────────────────────────── */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(target).classList.add('active');
+      btn.classList.add('active');
+    });
+  });
+
+  /* ── Packing checklist progress ────────────────── */
+  function updateProgress() {
+    const all     = document.querySelectorAll('.cb');
+    const checked = document.querySelectorAll('.cb:checked');
+    const pct     = all.length ? (checked.length / all.length * 100) : 0;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressTxt').textContent  = `${checked.length} / ${all.length} 완료`;
+  }
+
+  document.querySelectorAll('.cb').forEach(cb => cb.addEventListener('change', updateProgress));
+  updateProgress();
+</script>
+
+</body>
+</html>
